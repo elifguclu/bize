@@ -86,33 +86,29 @@ class MongoDatabase {
     }
   }
 
-//   [
-//   {
-//     $sort:
-//       /**
-//        * specifications: The fields to
-//        *   include or exclude.
-//        */
-//       {
-//         createdAt: -1,
-//       },
-//   },
-// ] postların tarihe göre sıralanması
+  static Future<List<Map<String, dynamic>>> getPost() async {
+    // final postData = await postCollection.find().sort({
+    //   {
+    //     'createdAt': -1, // sıralama yapıyoruz. postlar yeniden eskiye göre
+    //   }
+    // }).toList();
 
-// let input = "buzz";
+    final postData = await postCollection.find().toList();
 
-// db.collectionName.find(
-//     {
-//         $or: [
-//             { $text: { $search: input } },
-//             { _id: { $exists: true } }
-//         ]
-//     },
-//     {
-//         "foo": 1,
-//         score: { $meta: "textScore" }
-//     }
-// ).sort({
-//     score: { $meta: "textScore" }
-// });
+    // final postData = await postCollection.aggregate([
+    //   {
+    //     'project': {
+    //       "user_name": 1,
+    //       "user_surname": 1,
+    //       "value": 1,
+    //       "likes": 1,
+    //       "comments": 1
+    //     }
+    //   },
+    //   {
+    //     'sort': {'createdAt': -1}
+    //   }
+    // ]);
+    return postData;
+  }
 }
