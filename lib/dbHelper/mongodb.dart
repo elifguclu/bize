@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:bize/dbHelper/constant.dart';
 import 'package:bize/models/user.dart';
+import 'package:bize/models/post.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
 class MongoDatabase {
@@ -10,8 +11,8 @@ class MongoDatabase {
     db = await Db.create(MONGO_CONN_URL);
     await db.open();
     inspect(db);
-    userCollection = db.collection(USER_COLLECTION);
     postCollection = db.collection(POST_COLLECTION);
+    userCollection = db.collection(USER_COLLECTION);
   }
 
   static Future<String> insertUser(user data) async {
@@ -52,15 +53,36 @@ class MongoDatabase {
     }
   }
 
-  static Future<void> getUser(userQuery data) async {
+  static Future<void> getUser(String email) async {
     try {
-      var user = await userCollection.findOne({
-        'email': data.email,
-        'password': data.password
-      }); // kullanıcı email ve password eşleşmesi yapıyoruz.
+      var user = await userCollection.findOne(
+          {'email': email}); // kullanıcı email ve password eşleşmesi yapıyoruz.
       return user;
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  static Future<String> insertPost(String email, post data) async {
+    try {
+      var user = await userCollection
+          .findOne({'email': email}); // kullanıcı varsa eklemez.
+      if (user == null) {
+        return 'Something wrong.';
+      } else {
+        data.userId = user['_id'];
+        data.userName = user['name'];
+        data.userSurname = user['surname'];
+        var result = await postCollection.insertOne(data.toJson());
+        if (result.isSuccess) {
+          return 'Successfully';
+        } else {
+          return 'Something wrong while post inserting data.';
+        }
+      }
+    } catch (e) {
+      print(e.toString());
+      return e.toString();
     }
   }
 
