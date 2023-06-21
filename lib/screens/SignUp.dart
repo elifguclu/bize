@@ -1,21 +1,22 @@
 import 'package:bize/constants.dart';
 import 'package:bize/dbHelper/mongodb.dart';
-import 'package:bize/screens/SignUp.dart';
+import 'package:bize/main.dart';
+import 'package:bize/models/user.dart';
+import 'package:bize/screens/Home.dart';
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bize/utils/BottomBarMenu.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
 
-import 'models/user.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await MongoDatabase.connect();
-  runApp(const App());
+void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await MongoDatabase.connect();
+  runApp(const SignUp());
 }
 
-class App extends StatelessWidget {
-  const App({super.key});
+class SignUp extends StatelessWidget {
+  const SignUp({super.key});
 
   @override
   Widget build(BuildContext buildContext) {
@@ -27,7 +28,7 @@ class App extends StatelessWidget {
           subtitle1: TextStyle(color: Colors.white),
           subtitle2: TextStyle(color: Colors.white),
         ),
-        scaffoldBackgroundColor: Color(0xFF0B0B0B), //0xFF0B0B0B
+        scaffoldBackgroundColor: Color(0xFF0B0B0B),
       ),
       home: const MyHomePage(title: 'Bize App'),
     );
@@ -79,14 +80,15 @@ class _MyHomePage extends State<MyHomePage> {
     );
   }
 
-  String email = "";
-  String password = "";
-
   String textEmail = "";
   String textPassword = "";
+  String textName = "";
+  String textSurname = "";
 
   var emailController = new TextEditingController();
   var passwordController = new TextEditingController();
+  var nameController = new TextEditingController();
+  var surnameController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -99,16 +101,49 @@ class _MyHomePage extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(left: 36),
-                  child: const Text(
-                    TextConstants.userLogin,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat'),
-                  )),
+                width: double.infinity,
+                // padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                margin: const EdgeInsets.only(left: 36, right: 36, top: 15),
+                child: TextFormField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                      // contentPadding: EdgeInsets.only(left: 2),
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xff3a588d), width: 2.0)),
+                      border: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xff3a588d), width: 2.0)),
+                      labelText: TextConstants.name,
+                      labelStyle: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'Montserrat',
+                          color: Color(0xff3a588d))),
+                  onChanged: (text) => {textName = text},
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                // padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                margin: const EdgeInsets.only(left: 36, right: 36, top: 15),
+                child: TextFormField(
+                  controller: surnameController,
+                  decoration: const InputDecoration(
+                      // contentPadding: EdgeInsets.only(left: 2),
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xff3a588d), width: 2.0)),
+                      border: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xff3a588d), width: 2.0)),
+                      labelText: TextConstants.surname,
+                      labelStyle: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'Montserrat',
+                          color: Color(0xff3a588d))),
+                  onChanged: (text) => {textSurname = text},
+                ),
+              ),
               Container(
                 width: double.infinity,
                 // padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -164,26 +199,14 @@ class _MyHomePage extends State<MyHomePage> {
                       backgroundColor: Color(0xffff006f),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 8)),
-                  onPressed: () async {
-                    if (emailController.text == '' &&
-                        passwordController.text == '') {
-                      showModal(context, 'Bilgilerinizi kontrol edin.');
-                    } else {
-                      var result = await _login(
-                          emailController.text, passwordController.text);
-                      if (result == 'Successfully') {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const BottomBarMenu()),
-                        );
-                      } else {
-                        showModal(context, 'Bilgilerinizi kontrol edin.');
-                      }
-                    }
+                  onPressed: () {
+                    _insertUserData(nameController.text, surnameController.text,
+                        emailController.text, passwordController.text);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: ((context) => const App())));
                   },
                   child: const Text(
-                    TextConstants.login,
+                    TextConstants.signUp,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 20,
@@ -192,35 +215,30 @@ class _MyHomePage extends State<MyHomePage> {
                   ),
                 ),
               ),
-              Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(top: 20),
-                  child: TextButton(
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) => const SignUp())));
-                      },
-                      child: const Text(
-                        TextConstants.signUp,
-                        textAlign: TextAlign.center,
-                        style:
-                            TextStyle(fontSize: 14, fontFamily: 'Montserrat'),
-                      )))
             ]),
       )),
     ));
   }
 
-  Future<String> _login(String email, String password) async {
-    final data = userQuery(email: email, password: password);
-    var result = await MongoDatabase.login(data);
+  Future<void> _insertUserData(
+      String name, String surname, String email, String password) async {
+    var _id = M.ObjectId();
+    DateTime now = new DateTime.now();
+    final data = user(
+        id: _id,
+        email: email,
+        password: password,
+        name: name,
+        surname: surname,
+        createdAt: now.millisecondsSinceEpoch,
+        updatedAt: now.millisecondsSinceEpoch);
+    var result = await MongoDatabase.insertUser(data);
+
+    showModal(context, result);
+
+    // ScaffoldMessenger.of(context)
+    //     .showSnackBar(SnackBar(content: Text("Inserted ID " + _id.$oid)));
     _clearAll();
-    return result;
   }
 
   void _clearAll() {
