@@ -138,153 +138,153 @@ class _HomeState extends State<Home> {
   Widget displayPost(post data) {
     return SingleChildScrollView(
         child: AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Container(
-            //padding: const EdgeInsets.only(left: 8, right: 8),
-            margin:
-                const EdgeInsets.only(left: 8, right: 8, top: 15, bottom: 15),
-            decoration: BoxDecoration(color: Color(0xffc2cddb)),
-            child: Row(children: <Widget>[
-              Container(
-                alignment: Alignment.topLeft,
-                width: 50,
-                child: SvgPicture.asset(
-                  'assets/icons/avatar.svg',
-                  color: Colors.black,
-                ),
-              ),
-              Container(
-                child: Column(children: <Widget>[
-                  Container(
-                    child: Container(
-                      alignment: Alignment.center,
-                      //mainAxisAlignment: MainAxisAlignment.center,
-                      child: Text(
-                        //"Elif Bakır",
-                        "${data.userName} ${data.userSurname}",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat'),
-                      ),
-                    ),
+            value: SystemUiOverlayStyle.light,
+            child: Container(
+              margin: const EdgeInsets.only(left: 2, right: 2),
+              decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 1.5, color: Colors.black),
                   ),
-                ]),
-              )
-            ]),
-          ),
-          Container(
-            decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(width: 1.5, color: Colors.black),
-                ),
-                color: Color(0xffc2cddb)),
-            child: Row(children: <Widget>[
-              Column(
+                  color: Color(0xffc2cddb)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Container(
-                    margin:
-                        const EdgeInsets.only(left: 8, right: 8, bottom: 15),
-                    width: 355,
-                    child: Expanded(
-                      child: Text(
-                        "${data.value}",
-                        //"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
-                        softWrap: false,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis, //new
-                      ),
+                    padding: const EdgeInsets.only(
+                      left: 8,
                     ),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          //backgroundColor: Color(0xff877bfb),
-                          // width: double.infinity,
-                        ),
-                        onPressed: () => {},
-                        child: SvgPicture.asset(
-                          'assets/icons/like.svg',
-                          color: Color(0xffff006f),
-                          width: 30,
-                        ),
-                      ),
-                      Text(
-                        "${data.likes}",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat'),
-                      ),
-
-                      // boşluk
+                    margin: const EdgeInsets.only(top: 15, bottom: 15),
+                    //decoration: BoxDecoration(color: Color(0xffc2cddb)),
+                    child: Row(children: <Widget>[
                       Container(
+                        alignment: Alignment.topLeft,
                         width: 50,
-                      ),
-                      // boşluk
-
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          //backgroundColor: Color(0xff877bfb),
-                          // width: double.infinity,
-                        ),
-                        onPressed: () => {},
                         child: SvgPicture.asset(
-                          'assets/icons/message-circle.svg',
+                          'assets/icons/avatar.svg',
                           color: Colors.black,
-                          width: 30,
                         ),
                       ),
-                      Text(
-                        "${data.comments}",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat'),
-                      ),
-
-                      // boşluk
                       Container(
-                        width: 100,
-                      ),
-                      // boşluk
+                        child: Column(children: <Widget>[
+                          Container(
+                            child: Container(
+                              alignment: Alignment.center,
+                              //mainAxisAlignment: MainAxisAlignment.center,
+                              child: Text(
+                                //"Elif Bakır",
+                                "${data.userName} ${data.userSurname}",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Montserrat'),
+                              ),
+                            ),
+                          ),
+                        ]),
+                      )
+                    ]),
+                  ),
+                  Container(
+                    // decoration: BoxDecoration(
+                    //     border: Border(
+                    //       bottom: BorderSide(width: 1.5, color: Colors.black),
+                    //     ),
+                    //     color: Color(0xffc2cddb)),
+                    child: Row(children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            margin: const EdgeInsets.only(left: 8, bottom: 15),
+                            width: 355,
+                            child: Expanded(
+                              child: Text(
+                                "${data.value}",
+                                //"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                                softWrap: false,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis, //new
+                              ),
+                            ),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                ),
+                                onPressed: () => {},
+                                child: SvgPicture.asset(
+                                  'assets/icons/like.svg',
+                                  color: Color(0xffff006f),
+                                  width: 30,
+                                ),
+                              ),
+                              Text(
+                                "${data.likes}",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Montserrat'),
+                              ),
 
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          //backgroundColor: Color(0xff877bfb),
-                          // width: double.infinity,
-                        ),
-                        onPressed: () => {},
-                        child: SvgPicture.asset(
-                          'assets/icons/save.svg',
-                          color: Colors.black,
-                          width: 30,
-                        ),
-                      ),
-                    ],
-                  )
+                              // boşluk
+                              Container(
+                                width: 50,
+                              ),
+                              // boşluk
+
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                    foregroundColor: Colors.white),
+                                onPressed: () => {},
+                                child: SvgPicture.asset(
+                                  'assets/icons/message-circle.svg',
+                                  color: Colors.black,
+                                  width: 30,
+                                ),
+                              ),
+                              Text(
+                                "${data.comments}",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Montserrat'),
+                              ),
+
+                              // boşluk
+                              Container(
+                                width: 100,
+                              ),
+                              // boşluk
+
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                ),
+                                onPressed: () => {},
+                                child: SvgPicture.asset(
+                                  'assets/icons/save.svg',
+                                  color: Colors.black,
+                                  width: 30,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      )
+                    ]),
+                  ),
                 ],
-              )
-            ]),
-          ),
-        ],
-      ),
-    ));
+              ),
+            )));
   }
 }
