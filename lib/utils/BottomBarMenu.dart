@@ -7,10 +7,14 @@ import 'package:bize/screens/Home.dart';
 
 void main() {
   runApp(const BottomBarMenu());
+  //runApp(const BottomBarMenu(email: ''));
 }
 
 class BottomBarMenu extends StatefulWidget {
   const BottomBarMenu({super.key});
+  // final String email;
+  // const BottomBarMenu({required this.email});
+  //const BottomBarMenu({super.key});
 
   @override
   State<BottomBarMenu> createState() => _BottomBarMenu();
@@ -23,6 +27,7 @@ class _BottomBarMenu extends State<BottomBarMenu> {
   static const List<Widget> _pages = <Widget>[
     Home(),
     Post(),
+    //Post(user_email: ''),
     Profile(),
   ];
 

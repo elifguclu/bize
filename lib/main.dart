@@ -176,6 +176,7 @@ class _MyHomePage extends State<MyHomePage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => const BottomBarMenu()),
+                          // const BottomBarMenu(email: 'a')),
                         );
                       } else {
                         showModal(context, 'Bilgilerinizi kontrol edin.');
@@ -222,6 +223,13 @@ class _MyHomePage extends State<MyHomePage> {
     _clearAll();
     return result;
   }
+
+  // Future<void> _getUser(String email, String password) async {
+  //   final data = userQuery(email: email, password: password);
+  //   var result = await MongoDatabase.getUser(data);
+  //   _clearAll();
+  //   return result;
+  // }
 
   void _clearAll() {
     emailController.text = "";

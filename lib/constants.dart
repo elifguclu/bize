@@ -23,6 +23,7 @@ class TextConstants {
   static const String userLogin = 'Kullanıcı Girişi';
   static const String login = 'GİRİŞ';
   static const String signUp = 'Kayıt Ol';
+  static const String post = 'POST';
   static const String signIn = 'GİRİŞ YAPILIYOR';
   static const String forgotPassword = 'Şifremi Unuttum';
   static const String email = 'E-posta';

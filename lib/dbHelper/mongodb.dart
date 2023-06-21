@@ -52,6 +52,18 @@ class MongoDatabase {
     }
   }
 
+  static Future<void> getUser(userQuery data) async {
+    try {
+      var user = await userCollection.findOne({
+        'email': data.email,
+        'password': data.password
+      }); // kullanıcı email ve password eşleşmesi yapıyoruz.
+      return user;
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
 //   [
 //   {
 //     $sort:
