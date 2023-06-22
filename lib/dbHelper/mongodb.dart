@@ -86,7 +86,8 @@ class MongoDatabase {
     }
   }
 
-  static Future<List<Map<String, dynamic>>> getPost() async {
+  //static Future<List<Map<String, dynamic>>?> getPost() async {
+  static Future<List> getPost() async {
     // final postData = await postCollection.find().sort({
     //   {
     //     'createdAt': -1, // sıralama yapıyoruz. postlar yeniden eskiye göre
@@ -94,6 +95,8 @@ class MongoDatabase {
     // }).toList();
 
     final postData = await postCollection.find().toList();
+
+    var reversedList = new List.from(postData.reversed);
 
     // final postData = await postCollection.aggregate([
     //   {
@@ -109,6 +112,6 @@ class MongoDatabase {
     //     'sort': {'createdAt': -1}
     //   }
     // ]);
-    return postData;
+    return reversedList;
   }
 }

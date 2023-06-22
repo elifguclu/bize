@@ -5,16 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:bize/screens/Home.dart';
 
-void main() {
-  runApp(const BottomBarMenu());
-  //runApp(const BottomBarMenu(email: ''));
-}
-
 class BottomBarMenu extends StatefulWidget {
-  const BottomBarMenu({super.key});
-  // final String email;
-  // const BottomBarMenu({required this.email});
   //const BottomBarMenu({super.key});
+  final String email;
+  const BottomBarMenu({required this.email});
 
   @override
   State<BottomBarMenu> createState() => _BottomBarMenu();
@@ -22,14 +16,14 @@ class BottomBarMenu extends StatefulWidget {
 
 class _BottomBarMenu extends State<BottomBarMenu> {
   int _selectedIndex = 0;
+  late final List screens;
 
-  //New
-  static const List<Widget> _pages = <Widget>[
-    Home(),
-    Post(),
-    //Post(user_email: ''),
-    Profile(),
-  ];
+  // static List<Widget> _pages = <Widget>[
+  //   Home(),
+  //   Post(email: ''),
+  //   //Post(email: email),
+  //   Profile(),
+  // ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -37,11 +31,18 @@ class _BottomBarMenu extends State<BottomBarMenu> {
     });
   }
 
+  void initState() {
+    super.initState();
+
+    screens = [Home(), Post(email: widget.email), Profile()];
+  }
+
   @override
   Widget build(BuildContext buildContext) {
     return Scaffold(
       body: Center(
-        child: _pages.elementAt(_selectedIndex),
+        //child: _pages.elementAt(_selectedIndex),
+        child: screens[_selectedIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Color(0xffc2cddb),

@@ -9,9 +9,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
 
 class Post extends StatefulWidget {
-  const Post({super.key});
-  // final String user_email;
-  // const Post({required this.user_email});
+  //const Post({super.key});
+  final String email;
+  const Post({required this.email});
 
   @override
   State<Post> createState() => _PostState();
@@ -126,12 +126,14 @@ class _PostState extends State<Post> {
                       if (postController.text == '') {
                         showModal(context, 'Bilgilerinizi kontrol edin.');
                       } else {
-                        var result = await _post('q', postController.text);
+                        var result =
+                            await _post(widget.email, postController.text);
                         if (result == 'Successfully') {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const BottomBarMenu()),
+                                builder: (context) =>
+                                    BottomBarMenu(email: '${widget.email}')),
                           );
                         } else {
                           showModal(context, 'Bilgilerinizi kontrol edin.');

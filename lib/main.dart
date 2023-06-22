@@ -95,124 +95,123 @@ class _MyHomePage extends State<MyHomePage> {
       child: SingleChildScrollView(
           child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(left: 36),
-                  child: const Text(
-                    TextConstants.userLogin,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat'),
-                  )),
-              Container(
-                width: double.infinity,
-                // padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                margin: const EdgeInsets.only(left: 36, right: 36, top: 15),
-                child: TextFormField(
-                  controller: emailController,
-                  decoration: const InputDecoration(
-                      // contentPadding: EdgeInsets.only(left: 2),
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xff3a588d), width: 2.0)),
-                      border: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xff3a588d), width: 2.0)),
-                      labelText: TextConstants.email,
-                      labelStyle: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Montserrat',
-                          color: Color(0xff3a588d))),
-                  onChanged: (text) => {textEmail = text},
-                ),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
+            Widget>[
+          Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(left: 36),
+              child: const Text(
+                TextConstants.userLogin,
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Montserrat'),
+              )),
+          Container(
+            width: double.infinity,
+            // padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            margin: const EdgeInsets.only(left: 36, right: 36, top: 15),
+            child: TextFormField(
+              controller: emailController,
+              decoration: const InputDecoration(
+                  // contentPadding: EdgeInsets.only(left: 2),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xff3a588d), width: 2.0)),
+                  border: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xff3a588d), width: 2.0)),
+                  labelText: TextConstants.email,
+                  labelStyle: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Montserrat',
+                      color: Color(0xff3a588d))),
+              onChanged: (text) => {textEmail = text},
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            // padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            margin: const EdgeInsets.only(left: 36, right: 36),
+            child: TextFormField(
+              obscureText: true,
+              controller: passwordController,
+              decoration: const InputDecoration(
+                  // contentPadding: EdgeInsets.only(left: 2),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xff3a588d), width: 2.0)),
+                  border: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xff3a588d), width: 2.0)),
+                  labelText: TextConstants.password,
+                  labelStyle: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Montserrat',
+                      color: Color(0xff3a588d))),
+              onChanged: (text) => {textPassword = text},
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.only(left: 36, right: 36, top: 100),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                  fixedSize: Size.fromHeight(50),
+                  foregroundColor: Colors.white,
+                  backgroundColor: Color(0xffff006f),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8)),
+              onPressed: () async {
+                if (emailController.text == '' &&
+                    passwordController.text == '') {
+                  showModal(context, 'Bilgilerinizi kontrol edin.');
+                } else {
+                  var result = await _login(
+                      emailController.text, passwordController.text);
+                  if (result == 'Successfully') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              BottomBarMenu(email: '${emailController.text}')),
+                      // const BottomBarMenu(email: 'a')),
+                    );
+                  } else {
+                    showModal(context, 'Bilgilerinizi kontrol edin.');
+                  }
+                }
+              },
+              child: const Text(
+                TextConstants.login,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Montserrat'),
               ),
-              Container(
-                width: double.infinity,
-                // padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                margin: const EdgeInsets.only(left: 36, right: 36),
-                child: TextFormField(
-                  obscureText: true,
-                  controller: passwordController,
-                  decoration: const InputDecoration(
-                      // contentPadding: EdgeInsets.only(left: 2),
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xff3a588d), width: 2.0)),
-                      border: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xff3a588d), width: 2.0)),
-                      labelText: TextConstants.password,
-                      labelStyle: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Montserrat',
-                          color: Color(0xff3a588d))),
-                  onChanged: (text) => {textPassword = text},
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                margin: const EdgeInsets.only(left: 36, right: 36, top: 100),
-                child: TextButton(
+            ),
+          ),
+          Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(top: 20),
+              child: TextButton(
                   style: TextButton.styleFrom(
-                      fixedSize: Size.fromHeight(50),
-                      foregroundColor: Colors.white,
-                      backgroundColor: Color(0xffff006f),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 8)),
-                  onPressed: () async {
-                    if (emailController.text == '' &&
-                        passwordController.text == '') {
-                      showModal(context, 'Bilgilerinizi kontrol edin.');
-                    } else {
-                      var result = await _login(
-                          emailController.text, passwordController.text);
-                      if (result == 'Successfully') {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const BottomBarMenu()),
-                          // const BottomBarMenu(email: 'a')),
-                        );
-                      } else {
-                        showModal(context, 'Bilgilerinizi kontrol edin.');
-                      }
-                    }
+                    foregroundColor: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => const SignUp())));
                   },
                   child: const Text(
-                    TextConstants.login,
+                    TextConstants.signUp,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat'),
-                  ),
-                ),
-              ),
-              Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(top: 20),
-                  child: TextButton(
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) => const SignUp())));
-                      },
-                      child: const Text(
-                        TextConstants.signUp,
-                        textAlign: TextAlign.center,
-                        style:
-                            TextStyle(fontSize: 14, fontFamily: 'Montserrat'),
-                      )))
-            ]),
+                    style: TextStyle(fontSize: 14, fontFamily: 'Montserrat'),
+                  )))
+        ]),
       )),
     ));
   }
@@ -220,7 +219,7 @@ class _MyHomePage extends State<MyHomePage> {
   Future<String> _login(String email, String password) async {
     final data = userQuery(email: email, password: password);
     var result = await MongoDatabase.login(data);
-    _clearAll();
+    //_clearAll();
     return result;
   }
 
